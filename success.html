@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed · Sacred Numbers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #7A5F2A;
+    --cream: #F5EDD8;
+    --ink: #0C0E1A;
+    --navy-mid: #161A35;
+    --text: #D4C9A8;
+    --text-dim: #8A7F6A;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+  .card {
+    max-width: 560px;
+    border: 1px solid rgba(201,168,76,0.2);
+    background: var(--navy-mid);
+    padding: 4rem 3rem;
+  }
+  .symbol { font-size: 2.5rem; color: var(--gold); margin-bottom: 1.5rem; }
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+  p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+  .order-id {
+    font-family: 'Lato', sans-serif;
+    font-style: normal;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 2rem;
+    word-break: break-all;
+  }
+  a.btn {
+    display: inline-block;
+    margin-top: 2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 1rem 2.2rem;
+    background: var(--gold);
+    color: var(--ink);
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="symbol">✦</div>
+    <h1>Your Reading Is Confirmed</h1>
+    <p>Thank you — your payment was successful.</p>
+    <p>Your handcrafted reading will arrive by email within the timeframe stated at checkout. If you included a specific question, it will be addressed directly in your report.</p>
+    <div class="order-id" id="sessionId"></div>
+    <a href="/" class="btn">Return to Site</a>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get('session_id');
+    if (sessionId) {
+      document.getElementById('sessionId').textContent = 'Order reference: ' + sessionId;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "sacred-numbers-checkout",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stripe Checkout backend function for Sacred Numbers numerology readings site",
+  "dependencies": {
+    "stripe": "^17.0.0"
+  }
+}
