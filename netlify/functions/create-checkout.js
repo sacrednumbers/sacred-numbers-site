@@ -2,7 +2,6 @@
 // Creates a Stripe Checkout Session server-side using the secret key
 // stored in Netlify's environment variables (never exposed to the browser).
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // Map internal product keys to their Stripe Price IDs.
 // This mapping lives on the server so the browser never decides the price.
@@ -13,10 +12,19 @@ const PRICE_MAP = {
 };
 
 exports.handler = async (event) => {
+  // TEMPORARY DEBUG LOG — remove after troubleshooting
+  console.log('DEBUG: STRIPE_SECRET_KEY present?', !!process.env.STRIPE_SECRET_KEY);
+  console.log('DEBUG: STRIPE_SECRET_KEY length:', (process.env.STRIPE_SECRET_KEY || '').length);
+  console.log('DEBUG: STRIPE_SECRET_KEY prefix:', (process.env.STRIPE_SECRET_KEY || '').slice(0, 7));
+
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
+
+  // Initialize Stripe inside the handler so the debug logs above run first
+  const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 
   try {
     const body = JSON.parse(event.body || '{}');
