@@ -763,6 +763,166 @@
     font-style: italic;
   }
 
+  /* ─── READING OVERLAY ─── */
+  .reading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(12,14,26,0.95);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+    overflow-y: auto;
+  }
+  .reading-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .reading-modal {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201,168,76,0.2);
+    max-width: 740px;
+    width: 100%;
+    position: relative;
+    transform: translateY(30px);
+    transition: transform 0.4s;
+    margin: auto;
+  }
+  .reading-overlay.open .reading-modal {
+    transform: translateY(0);
+  }
+  .reading-modal-header {
+    padding: 3rem 3.5rem 2rem;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    position: relative;
+  }
+  .reading-modal-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .reading-modal-close:hover { color: var(--gold); }
+  .reading-person-initials {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-dim), rgba(201,168,76,0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    border: 1px solid rgba(201,168,76,0.2);
+    margin-bottom: 1.25rem;
+  }
+  .reading-person-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 0.25rem;
+  }
+  .reading-person-birth {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+  .reading-birth-name-note {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 0.3rem 0.8rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.1em;
+    margin-top: 0.5rem;
+  }
+  .reading-numbers-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .reading-modal-body {
+    padding: 2.5rem 3.5rem 3rem;
+  }
+  .reading-number-block {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+  }
+  .reading-number-block:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .reading-number-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .reading-number-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 2.5rem;
+  }
+  .reading-number-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    letter-spacing: 0.05em;
+  }
+  .reading-number-subtitle {
+    font-size: 0.75rem;
+    color: var(--gold-dim);
+    margin-top: 0.2rem;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .reading-number-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text);
+  }
+  .reading-number-text p {
+    margin-bottom: 1rem;
+  }
+  .reading-number-text p:last-child { margin-bottom: 0; }
+  .reading-cta-bar {
+    padding: 2rem 3.5rem;
+    background: rgba(201,168,76,0.04);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .reading-cta-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 1rem;
+  }
+
   /* ─── ANIMATIONS ─── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
@@ -974,17 +1134,18 @@
 
     <div class="famous-grid reveal">
 
-      <!-- CARD 1 — Steve Jobs -->
-      <div class="famous-card" data-number="1">
-        <div class="famous-initials">SJ</div>
-        <div class="famous-name">Steve Jobs</div>
-        <div class="famous-dates">February 24, 1955 · San Francisco</div>
+      <!-- CARD 1 — Martin Luther King Jr -->
+      <div class="famous-card" data-number="1" onclick="openReading('mlk')" style="cursor:pointer; position:relative;">
+        <div style="position:absolute; top:1rem; right:1rem; font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.2em; color:var(--gold); background:rgba(201,168,76,0.08); border:1px solid rgba(201,168,76,0.2); padding:0.25rem 0.6rem;">READ MORE</div>
+        <div class="famous-initials">MLK</div>
+        <div class="famous-name">Martin Luther King Jr</div>
+        <div class="famous-dates">January 15, 1929 · Atlanta, Georgia</div>
         <div class="famous-numbers">
-          <span class="num-chip">Life Path 11</span>
-          <span class="num-chip">Expression 7</span>
-          <span class="num-chip">Soul Urge 9</span>
+          <span class="num-chip">Life Path 1</span>
+          <span class="num-chip">Expression 6</span>
+          <span class="num-chip">Soul Urge 5</span>
         </div>
-        <p class="famous-insight">A Master Number 11 Life Path — the Illuminator. His relentless vision for beauty and perfection mirrors the 7's deep search for meaning, while his 9 Soul Urge drove him to create for humanity, not just for profit.</p>
+        <p class="famous-insight">Born Michael Luther King Jr — a name change that shifted his entire numerological signature. His 1 Life Path drove an unshakeable independence; his 6 Expression placed responsibility and love for others at his core; his 5 Soul Urge made freedom not just a cause, but a personal hunger.</p>
       </div>
 
       <!-- CARD 2 — Oprah Winfrey -->
@@ -1105,7 +1266,104 @@
   <div class="footer-copy">© 2026 Sacred Numbers. All rights reserved.</div>
 </footer>
 
+<!-- READING OVERLAYS -->
+<div class="reading-overlay" id="readingOverlay" onclick="closeReading(event)">
+  <div class="reading-modal" id="readingModal">
+    <div class="reading-modal-header">
+      <button class="reading-modal-close" onclick="closeReadingBtn()">×</button>
+      <div class="reading-person-initials" id="readingInitials"></div>
+      <div class="reading-person-name" id="readingName"></div>
+      <div class="reading-person-birth" id="readingBirth"></div>
+      <div id="readingBirthNameNote"></div>
+      <div class="reading-numbers-row" id="readingNumbersRow"></div>
+    </div>
+    <div class="reading-modal-body" id="readingBody"></div>
+    <div class="reading-cta-bar">
+      <p class="reading-cta-text">Curious what your own numbers reveal?</p>
+      <a href="https://buy.stripe.com/aFa28rdUlg1Y2sz7o2dnW01" target="_blank" rel="noopener" class="btn-primary"><span>Order Your Reading</span></a>
+    </div>
+  </div>
+</div>
+
 <script>
+  // ─── READING DATA ───
+  const readings = {
+    mlk: {
+      initials: 'MLK',
+      name: 'Martin Luther King Jr',
+      birth: 'January 15, 1929 · Atlanta, Georgia',
+      birthNameNote: 'Born: Michael Luther King Jr',
+      numbers: [
+        { num: '1', title: 'Life Path', subtitle: 'Leadership & Independence' },
+        { num: '6', title: 'Expression', subtitle: 'Loving & Responsible Nature' },
+        { num: '5', title: 'Soul Urge', subtitle: 'Versatility & Restlessness' },
+      ],
+      blocks: [
+        {
+          num: '1', title: 'Life Path', subtitle: 'Leadership & Independence',
+          text: `<p>Martin Luther King Jr was born with strong leadership potential — and his Life Path 1 is the clearest signal of that. The 1 Life Path belongs to those who are here to learn independence, to stand on their own two feet and, from that grounded place, lead others.</p>
+<p>Others recognised his strong character and inner strength from early on. They were willing to trust his judgment and follow as he initiated and controlled the direction of an entire movement. His leadership operated by holding the vision — the major decisions, the moral compass — while others took care of the details.</p>
+<p>The 1 also carries a relentless drive to win recognition, to accomplish, and to exert personal power. King's conviction that his approach was the right one — his refusal to yield to opposition — is textbook Life Path 1 energy expressed at its highest level.</p>`
+        },
+        {
+          num: '6', title: 'Expression', subtitle: 'Loving & Responsible Nature',
+          text: `<p>His Expression Number 6 reveals the engine behind the mission: a deep, genuine love for people. The 6 is the number of responsibility, service and care — and King devoted the overwhelming majority of his energy to others, at enormous personal cost.</p>
+<p>Those around him recognised his responsible ways and turned to him constantly for support and understanding. His teaching and counselling abilities — central to the 6 — were expressed from every pulpit and podium. He had a sympathetic, kind and generous nature, with a profound understanding of other people's suffering.</p>
+<p>Importantly, the 6 also carries a warning: the risk of becoming so self-sacrificing that one's own needs are ignored entirely. King's life reflects this too — a man who gave everything, rarely pausing to protect himself, ultimately paying the ultimate price for it.</p>`
+        },
+        {
+          num: '5', title: 'Soul Urge', subtitle: 'Versatility & Restlessness',
+          text: `<p>Beneath the composed public leader was a Soul Urge 5 — a deep inner hunger for freedom, movement and variety. The 5 is the most freedom-oriented number in numerology, and it is no coincidence that freedom was the word at the very centre of King's life work.</p>
+<p>"Free at last, free at last" — these were not just political words. They resonated from somewhere inside him that was entirely personal. The Soul Urge is what we want most deeply, often without being able to fully explain why.</p>
+<p>The 5 also brings versatility, enthusiasm and the ability to excite others with one's energy. King's speeches carried a contagious momentum that drew people in — not just through argument, but through feeling. That is the 5 Soul Urge at work: igniting others with an almost electric aliveness.</p>`
+        },
+      ]
+    }
+  };
+
+  function openReading(key) {
+    const r = readings[key];
+    if (!r) return;
+
+    document.getElementById('readingInitials').textContent = r.initials;
+    document.getElementById('readingName').textContent = r.name;
+    document.getElementById('readingBirth').textContent = r.birth;
+
+    const noteEl = document.getElementById('readingBirthNameNote');
+    noteEl.innerHTML = r.birthNameNote
+      ? `<span class="reading-birth-name-note">✦ ${r.birthNameNote}</span>` : '';
+
+    const numRow = document.getElementById('readingNumbersRow');
+    numRow.innerHTML = r.numbers.map(n =>
+      `<span class="num-chip">${n.title} ${n.num}</span>`
+    ).join('');
+
+    const body = document.getElementById('readingBody');
+    body.innerHTML = r.blocks.map(b => `
+      <div class="reading-number-block">
+        <div class="reading-number-label">
+          <div class="reading-number-badge">${b.num}</div>
+          <div>
+            <div class="reading-number-title">${b.title} Number</div>
+            <div class="reading-number-subtitle">${b.subtitle}</div>
+          </div>
+        </div>
+        <div class="reading-number-text">${b.text}</div>
+      </div>
+    `).join('');
+
+    document.getElementById('readingOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeReading(e) {
+    if (e.target === document.getElementById('readingOverlay')) closeReadingBtn();
+  }
+  function closeReadingBtn() {
+    document.getElementById('readingOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
