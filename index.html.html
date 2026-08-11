@@ -923,6 +923,41 @@
     font-size: 1rem;
   }
 
+  /* ─── LANGUAGE TOGGLE ─── */
+  .lang-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 150;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .lang-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    padding: 0.6rem 1rem;
+    border: 1px solid rgba(201,168,76,0.3);
+    background: rgba(12,14,26,0.95);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+  .lang-btn.active {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+  .lang-btn:hover:not(.active) {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .goog-te-banner-frame { display: none !important; }
+  body { top: 0 !important; }
+  .skiptranslate { display: none !important; }
+
   /* ─── ANIMATIONS ─── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
@@ -1267,7 +1302,50 @@
   <div class="footer-copy">© 2026 Sacred Numbers. All rights reserved.</div>
 </footer>
 
-<!-- READING OVERLAYS -->
+<!-- LANGUAGE TOGGLE -->
+<div class="lang-toggle">
+  <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" id="btnES" onclick="setLang('es')">ES</button>
+</div>
+
+<!-- Google Translate -->
+<div id="google_translate_element" style="display:none"></div>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'es',
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+
+  function setLang(lang) {
+    if (lang === 'es') {
+      const select = document.querySelector('.goog-te-combo');
+      if (select) {
+        select.value = 'es';
+        select.dispatchEvent(new Event('change'));
+      }
+      document.getElementById('btnES').classList.add('active');
+      document.getElementById('btnEN').classList.remove('active');
+    } else {
+      const frame = document.querySelector('.goog-te-banner-frame');
+      const restoreBtn = document.querySelector('.goog-te-gadget a');
+      if (restoreBtn) restoreBtn.click();
+      // Fallback: reload page to restore English
+      if (document.cookie.indexOf('googtrans') !== -1) {
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
+        window.location.reload();
+      }
+      document.getElementById('btnEN').classList.add('active');
+      document.getElementById('btnES').classList.remove('active');
+    }
+  }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
 <div class="reading-overlay" id="readingOverlay" onclick="closeReading(event)">
   <div class="reading-modal" id="readingModal">
     <div class="reading-modal-header">
